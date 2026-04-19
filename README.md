@@ -37,7 +37,7 @@ timestamp_decimal || "\n" ||
 device_id_hex_lower || "\n" ||
 method_upper || "\n" ||
 path_with_query || "\n" ||
-blake3(body_bytes)  // 32-byte digest, raw
+sha256(body_bytes)  // 32-byte digest, raw
 ```
 
 Server verifies:
@@ -51,7 +51,7 @@ Server response includes `x-server-signature` (base64 Ed25519) over:
 "krone-res-v1\n"  ||
 request_id || "\n" ||
 status_code_decimal || "\n" ||
-blake3(response_body)
+sha256(response_body)
 ```
 
 `request_id` is the value of the request's `x-request-id` header (or a server-generated ULID if none).
