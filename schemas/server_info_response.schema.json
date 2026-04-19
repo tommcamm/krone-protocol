@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/server_info_response.schema.json",
+  "title": "ServerInfoResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocol_version", "server_version", "server_pk", "policy"],
+  "properties": {
+    "protocol_version": {
+      "type": "string",
+      "description": "Semver of the wire contract."
+    },
+    "server_version": {
+      "type": "string",
+      "description": "Informational build identifier of the running server."
+    },
+    "server_pk": {
+      "$ref": "common.schema.json#/$defs/hex32",
+      "description": "Ed25519 public key the server uses to sign responses."
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ttl_seconds",
+        "max_envelope_bytes",
+        "max_inbox_per_device",
+        "max_envelopes_per_device_per_hour",
+        "clock_skew_seconds"
+      ],
+      "properties": {
+        "ttl_seconds": { "type": "integer", "minimum": 1 },
+        "max_envelope_bytes": { "type": "integer", "minimum": 1 },
+        "max_inbox_per_device": { "type": "integer", "minimum": 1 },
+        "max_envelopes_per_device_per_hour": { "type": "integer", "minimum": 1 },
+        "clock_skew_seconds": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

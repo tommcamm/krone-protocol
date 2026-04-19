@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/envelope.schema.json",
+  "title": "Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "envelope_id",
+    "recipient_device_id",
+    "recipient_tag",
+    "epoch",
+    "seq",
+    "nonce",
+    "ciphertext",
+    "content_signature"
+  ],
+  "properties": {
+    "envelope_id": {
+      "$ref": "common.schema.json#/$defs/ulid",
+      "description": "Client-generated ULID. Server rejects duplicates."
+    },
+    "recipient_device_id": {
+      "$ref": "common.schema.json#/$defs/hex16",
+      "description": "Device id the server should route this to."
+    },
+    "recipient_tag": {
+      "$ref": "common.schema.json#/$defs/hex32",
+      "description": "Per-recipient HMAC tag; opaque to the server, used client-side to match to a group."
+    },
+    "epoch": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Sender-key epoch in the recipient's group."
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Per-sender monotonic sequence within the epoch."
+    },
+    "nonce": {
+      "$ref": "common.schema.json#/$defs/hex24",
+      "description": "XChaCha20-Poly1305 nonce."
+    },
+    "ciphertext": {
+      "$ref": "common.schema.json#/$defs/base64_std",
+      "description": "AEAD ciphertext including auth tag."
+    },
+    "content_signature": {
+      "$ref": "common.schema.json#/$defs/base64_std",
+      "description": "Ed25519 signature over ciphertext || ad using sender's identity key."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "description": "Canonical signed-request test vector. Both client and server implementations must compute the same signing input and agree on verification.",
+  "seed_hex": "0101010101010101010101010101010101010101010101010101010101010101",
+  "identity_pk_hex": "8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+  "device_id_hex": "a9c61d4ba56fe6d35b0c11ed1a7b1c7c",
+  "request": {
+    "method": "POST",
+    "path": "/devices",
+    "timestamp": 1750000000,
+    "body": "{\"device_id\":\"a9c61d4ba56fe6d35b0c11ed1a7b1c7c\",\"identity_pk\":\"8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c\"}"
+  },
+  "signing_input_components": [
+    "krone-req-v1",
+    "1750000000",
+    "a9c61d4ba56fe6d35b0c11ed1a7b1c7c",
+    "POST",
+    "/devices",
+    "<blake3(body)>"
+  ],
+  "note": "Implementations should regenerate the signature from seed_hex and verify byte-for-byte equality. A signed expected signature is omitted from this file because Ed25519 signatures are deterministic given the signing input; parity is checked by computing both sides."
+}

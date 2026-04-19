@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/envelope_submit_response.schema.json",
+  "title": "EnvelopeSubmitResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["accepted"],
+  "properties": {
+    "accepted": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/ulid" },
+      "description": "ULIDs of envelopes the server persisted. Duplicates are accepted idempotently."
+    }
+  }
+}

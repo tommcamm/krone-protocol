@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/ack_response.schema.json",
+  "title": "AckResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["acknowledged"],
+  "properties": {
+    "acknowledged": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of envelope rows transitioned from pending to acked."
+    }
+  }
+}

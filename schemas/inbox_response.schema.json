@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/inbox_response.schema.json",
+  "title": "InboxResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["envelopes", "next_cursor"],
+  "properties": {
+    "envelopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "envelope_id",
+          "sender_device_id",
+          "recipient_device_id",
+          "recipient_tag",
+          "epoch",
+          "seq",
+          "nonce",
+          "ciphertext",
+          "content_signature",
+          "created_at"
+        ],
+        "properties": {
+          "envelope_id": { "$ref": "common.schema.json#/$defs/ulid" },
+          "sender_device_id": { "$ref": "common.schema.json#/$defs/hex16" },
+          "recipient_device_id": { "$ref": "common.schema.json#/$defs/hex16" },
+          "recipient_tag": { "$ref": "common.schema.json#/$defs/hex32" },
+          "epoch": { "type": "integer", "minimum": 0 },
+          "seq": { "type": "integer", "minimum": 0 },
+          "nonce": { "$ref": "common.schema.json#/$defs/hex24" },
+          "ciphertext": { "$ref": "common.schema.json#/$defs/base64_std" },
+          "content_signature": { "$ref": "common.schema.json#/$defs/base64_std" },
+          "created_at": { "$ref": "common.schema.json#/$defs/rfc3339" }
+        }
+      }
+    },
+    "next_cursor": {
+      "type": ["string", "null"],
+      "description": "Opaque cursor to pass as ?since= on the next request. Null when the inbox is drained."
+    }
+  }
+}

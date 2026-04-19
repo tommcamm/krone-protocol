@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/device_registration_request.schema.json",
+  "title": "DeviceRegistrationRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["device_id", "identity_pk"],
+  "properties": {
+    "device_id": {
+      "$ref": "common.schema.json#/$defs/hex16",
+      "description": "SHA-256(identity_pk) truncated to 16 bytes. Server re-derives and rejects mismatches."
+    },
+    "identity_pk": {
+      "$ref": "common.schema.json#/$defs/hex32",
+      "description": "Ed25519 public key the device will sign with going forward."
+    }
+  }
+}

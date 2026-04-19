@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://krone.app/protocol/1/common.schema.json",
+  "title": "Common types",
+  "$defs": {
+    "hex16": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$",
+      "description": "16 bytes, lowercase hex."
+    },
+    "hex24": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{48}$",
+      "description": "24 bytes, lowercase hex (XChaCha20-Poly1305 nonce)."
+    },
+    "hex32": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "32 bytes, lowercase hex (Ed25519 pubkey or BLAKE3 digest)."
+    },
+    "ulid": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Crockford base32 ULID, 26 chars."
+    },
+    "base64_std": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+      "description": "Standard base64, padded."
+    },
+    "rfc3339": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
