@@ -1,0 +1,96 @@
+{
+  "format_version": 1,
+  "description": "Canonical Ed25519 signing vectors for krone-req-v1 (request) and krone-res-v1 (response) formats. Every krone-protocol implementation MUST reproduce body_sha256_hex, signing_input_hex, and signature_b64 byte-for-byte from the given inputs. Regenerate via: cargo run --example gen_vectors in krone-groups-server.",
+  "generator": "krone-groups-server examples/gen_vectors.rs",
+  "server": {
+    "seed_hex": "1111111111111111111111111111111111111111111111111111111111111111",
+    "public_key_hex": "d04ab232742bb4ab3a1368bd4615e4e6d0224ab71a016baf8520a332c9778737"
+  },
+  "clients": {
+    "alice": {
+      "seed_hex": "0202020202020202020202020202020202020202020202020202020202020202",
+      "public_key_hex": "8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394",
+      "device_id_hex": "6a3803d5f059902a1c6dafbc9ba47292"
+    },
+    "bob": {
+      "seed_hex": "0303030303030303030303030303030303030303030303030303030303030303",
+      "public_key_hex": "ed4928c628d1c2c6eae90338905995612959273a5c63f93636c14614ac8737d1",
+      "device_id_hex": "b62e867fa2f33afe62d5d6b1642e1621"
+    }
+  },
+  "request_vectors": [
+    {
+      "name": "post_devices_registration_alice",
+      "signer": "alice",
+      "method": "POST",
+      "path": "/devices",
+      "timestamp": 1750000000,
+      "body_utf8": "{\"device_id\":\"6a3803d5f059902a1c6dafbc9ba47292\",\"identity_pk\":\"8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394\"}",
+      "body_sha256_hex": "c7728957882bd8bcde4338086820cc86e3691e1226b90fb993b896776073f10b",
+      "signing_input_hex": "6b726f6e652d7265712d76310a313735303030303030300a36613338303364356630353939303261316336646166626339626134373239320a504f53540a2f646576696365730ac7728957882bd8bcde4338086820cc86e3691e1226b90fb993b896776073f10b",
+      "signature_b64": "v67rop3gMks2xkS1V/IsxGmbQUcn6vKXz62ro2eL7Lybvux6GxyWGK311jyf8U1Y+kEUR3XMrak+rmvTKb1WAw=="
+    },
+    {
+      "name": "get_inbox_empty_body",
+      "signer": "alice",
+      "method": "GET",
+      "path": "/envelopes/inbox?since=0&limit=100",
+      "timestamp": 1750000050,
+      "body_utf8": "",
+      "body_sha256_hex": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signing_input_hex": "6b726f6e652d7265712d76310a313735303030303035300a36613338303364356630353939303261316336646166626339626134373239320a4745540a2f656e76656c6f7065732f696e626f783f73696e63653d30266c696d69743d3130300ae3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signature_b64": "+P9gzYDyO5PVGYEo0ujIlDaT7VtT782Au7XhYfuRU/lFJZXvQwazuTt1cHgS5qZo4u3eJJlJAgIEoEI+GD5SCA=="
+    },
+    {
+      "name": "post_envelopes_single_recipient",
+      "signer": "alice",
+      "method": "POST",
+      "path": "/envelopes",
+      "timestamp": 1750000100,
+      "body_utf8": "{\"envelopes\":[{\"envelope_id\":\"01HZY0000000000000000ENVEL\",\"recipient_device_id\":\"b62e867fa2f33afe62d5d6b1642e1621\",\"recipient_tag\":\"7e6c5b4a39281706f5e4d3c2b1a09f8e7d6c5b4a39281706f5e4d3c2b1a09f8e\",\"epoch\":0,\"seq\":1,\"nonce\":\"000102030405060708090a0b0c0d0e0f1011121314151617\",\"ciphertext\":\"Y2lwaGVydGV4dC1zdHVi\",\"content_signature\":\"c2lnbmF0dXJlLXN0dWI=\"}]}",
+      "body_sha256_hex": "877b275f6e865841b18f8f2175e358d726efd724a558cf74b650dbe32fc4ca4e",
+      "signing_input_hex": "6b726f6e652d7265712d76310a313735303030303130300a36613338303364356630353939303261316336646166626339626134373239320a504f53540a2f656e76656c6f7065730a877b275f6e865841b18f8f2175e358d726efd724a558cf74b650dbe32fc4ca4e",
+      "signature_b64": "gfcLC63Lwz4Nhqsf0cTOitEEO852k2hs71FbO4/2cC+pzecbWH7H/fAQxdL1kzYOamZagFPVfm+Yuku5XuxcBQ=="
+    },
+    {
+      "name": "delete_self_bob",
+      "signer": "bob",
+      "method": "DELETE",
+      "path": "/devices/self",
+      "timestamp": 1750000200,
+      "body_utf8": "",
+      "body_sha256_hex": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signing_input_hex": "6b726f6e652d7265712d76310a313735303030303230300a62363265383637666132663333616665363264356436623136343265313632310a44454c4554450a2f646576696365732f73656c660ae3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signature_b64": "dk10AC4SIxKAG5Q+xlu/Bn/zlA2qA4BEb5ZTZFIlA5Jm0gOeivac6yDD9jcU4njAjihaI0xIqOMCTBNmkWSOCw=="
+    }
+  ],
+  "response_vectors": [
+    {
+      "name": "health_ok",
+      "request_id": "01HZY0000000000000000RID001",
+      "status_code": 200,
+      "body_utf8": "{\"status\":\"ok\"}",
+      "body_sha256_hex": "a29ee2b15c494311c52521766e44af56a3ad2248e7a8ab465e5206463c13d288",
+      "signing_input_hex": "6b726f6e652d7265732d76310a3031485a59303030303030303030303030303030305249443030310a3230300aa29ee2b15c494311c52521766e44af56a3ad2248e7a8ab465e5206463c13d288",
+      "signature_b64": "pfJzMcFJpwh98DIJhYNJntA71CsBSiPyRbzLhPOl/QJ/W4pnPZRggCl9vA3oZ8AswkK1/ENIaDu6u3kbwJM/Dw=="
+    },
+    {
+      "name": "envelope_submit_ok",
+      "request_id": "01HZY0000000000000000RID002",
+      "status_code": 200,
+      "body_utf8": "{\"accepted\":1,\"duplicates\":0}",
+      "body_sha256_hex": "27654921a39c4dedc1d5c3fe268c30f8f176ac1b99c24f9d54610d97c625e60e",
+      "signing_input_hex": "6b726f6e652d7265732d76310a3031485a59303030303030303030303030303030305249443030320a3230300a27654921a39c4dedc1d5c3fe268c30f8f176ac1b99c24f9d54610d97c625e60e",
+      "signature_b64": "3twPRvPxSUazMtCU8fdKrHZJxc34sFmwzYxETZJYmuQjlFadsShoZCIv3vSmppKavjekxsL/KzMOPlMOEu8ABQ=="
+    },
+    {
+      "name": "error_401_bad_signature",
+      "request_id": "01HZY0000000000000000RID003",
+      "status_code": 401,
+      "body_utf8": "{\"error\":\"unauthorized\",\"message\":\"invalid signature\"}",
+      "body_sha256_hex": "19b2834961fb1739036ccfeb10e53d36870d0aba757e97598382616ccfa7a4a0",
+      "signing_input_hex": "6b726f6e652d7265732d76310a3031485a59303030303030303030303030303030305249443030330a3430310a19b2834961fb1739036ccfeb10e53d36870d0aba757e97598382616ccfa7a4a0",
+      "signature_b64": "CchoH0osx2KRPIx5COGxevZBqlkUd27E7AYd+61+fLiYsBNo6djyVBjRn2hIe+6UTsUrt5bBqq01JkKzbrG1BQ=="
+    }
+  ]
+}

@@ -7,7 +7,7 @@ Wire-format contract between Krone's Android client (`krone`) and its Rust relay
 ## Layout
 
 - `schemas/` — JSON Schema (draft 2020-12) for every request/response body.
-- `vectors/` — canonical test vectors (hex/base64 encoded) used by both sides to prove interoperability.
+- `vectors/signing_vectors.json` — canonical Ed25519 signing vectors (see [Test vectors](#test-vectors)). Both sides must reproduce these byte-for-byte.
 - `VERSION` — protocol semver. Used in `GET /server-info` responses.
 
 ## Compatibility
@@ -55,6 +55,24 @@ sha256(response_body)
 ```
 
 `request_id` is the value of the request's `x-request-id` header (or a server-generated ULID if none).
+
+## Test vectors
+
+`vectors/signing_vectors.json` pins the canonical byte-level output of both signing formats. Every implementation (Rust server, Android client, any future client) MUST reproduce, from the inputs in each vector:
+
+1. `body_sha256_hex` — SHA-256 of the raw body bytes.
+2. `signing_input_hex` — the exact bytes that go into Ed25519 (tag, separators, body hash — no padding, no length prefixes).
+3. `signature_b64` — the Ed25519 signature produced by the referenced key, base64-standard with padding.
+
+These three layers are independently checkable, which lets an implementor localize a mismatch: if body-hash matches but signing-input doesn't, the canonicalization is wrong; if signing-input matches but signature doesn't, the Ed25519 binding is wrong.
+
+Vectors are regenerated with:
+
+```
+cargo run --example gen_vectors > protocol/vectors/signing_vectors.json
+```
+
+from inside `krone-groups-server`. Seeds are fixed (see the top of `examples/gen_vectors.rs`), so output is deterministic — any diff to this file on a PR means the wire format changed and all implementations must be audited.
 
 ## Endpoints
 
