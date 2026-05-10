@@ -82,7 +82,7 @@ See `schemas/` for exact shapes.
 - `GET /healthz` — unsigned; returns `{status: "ok"}`.
 - `POST /devices` — signed (pubkey in body); request `device_registration_request`, response `device_registration_response`.
 - `DELETE /devices/self` — signed, empty body; response `{status: "ok"}`.
-- `POST /envelopes` — signed; request `envelope_submit_request`, response `envelope_submit_response`.
+- `POST /envelopes` — signed; request `envelope_submit_request`, response `envelope_submit_response`; each `recipient_device_id` must already be registered.
 - `GET /envelopes/inbox?since=<cursor>&limit=<n>` — signed, empty body; response `inbox_response`.
 - `POST /envelopes/ack` — signed; request `ack_request`, response `{acknowledged: n}`.
 
